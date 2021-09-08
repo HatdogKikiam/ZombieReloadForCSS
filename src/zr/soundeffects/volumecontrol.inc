@@ -205,7 +205,9 @@ public void CountDownVolumeMenu(int client)
 	Menu menu = CreateMenu(CountDownVolumeMenuHandler, MENU_ACTIONS_DEFAULT);
 	
 	char sMenuTitle[128];
-	Format(sMenuTitle, sizeof(sMenuTitle), "%t\n%t", "Countdown_Title_Menu", zfCountdownVolume[client], "Countdown_CommandUsage");
+	int volumes = RoundToNearest(zfCountdownVolume[client] / 0.01);
+	
+	Format(sMenuTitle, sizeof(sMenuTitle), "%t\n%t", "Countdown_Title_Menu", volumes, "Countdown_CommandUsage");
 	menu.SetTitle(sMenuTitle);	
 	
 	menu.AddItem("1" ,"100%");
@@ -308,7 +310,9 @@ public void ZombieVoiceVolumeMenu(int client)
 	Menu menu = CreateMenu(ZombieVoiceVolumeMenuHandler, MENU_ACTIONS_DEFAULT);
 	
 	char sMenuTitle[128];
-	Format(sMenuTitle, sizeof(sMenuTitle), "%t\n%t", "ZombieVoice_Title_Menu", zfZSoundVolume[client], "ZombieVoice_CommandUsage");
+	int volumes = RoundToNearest(zfZSoundVolume[client] / 0.01);
+	
+	Format(sMenuTitle, sizeof(sMenuTitle), "%t\n%t", "ZombieVoice_Title_Menu", volumes, "ZombieVoice_CommandUsage");
 	menu.SetTitle(sMenuTitle);	
 	
 	menu.AddItem("1" ,"100%");
@@ -409,9 +413,11 @@ public Action Command_ZAmbient(int client, int args)
 public void AmbientVolumeMenu(int client)
 {
 	Menu menu = CreateMenu(AmbientVolumeMenuHandler, MENU_ACTIONS_DEFAULT);
-	
+
 	char sMenuTitle[128];
-	Format(sMenuTitle, sizeof(sMenuTitle), "%t\n%t", "Ambient_Title_Menu", zfAmbientVolume[client], "Ambient_CommandUsage");
+	int volumes = RoundToNearest(zfAmbientVolume[client] / 0.01);
+	
+	Format(sMenuTitle, sizeof(sMenuTitle), "%t\n%t", "Ambient_Title_Menu", volumes, "Ambient_CommandUsage");
 	menu.SetTitle(sMenuTitle);	
 	
 	menu.AddItem("1" ,"100%");
