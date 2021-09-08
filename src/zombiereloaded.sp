@@ -53,7 +53,7 @@
 
 
 
-#define VERSION "3.6.3 Franug edition"
+#define VERSION "3.6.4 Oyl-Edition"
 
 bool g_allweapons[MAXPLAYERS + 1];
 
@@ -132,7 +132,7 @@ bool g_allweapons[MAXPLAYERS + 1];
 public Plugin:myinfo =
 {
 	name = "Zombie:Reloaded",
-	author = "Greyscale | Richard Helgeby and Franc1sco franug",
+	author = "Greyscale | Richard Helgeby | Franc1sco franug and Oylsister",
 	description = "Infection/survival style gameplay",
 	version = VERSION,
 	url = "https://github.com/Franc1sco/sm-zombiereloaded-3-Franug-Edition"
