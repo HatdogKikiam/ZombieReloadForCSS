@@ -935,7 +935,7 @@ stock bool:ZMarketEquip(client, const String:weapon[], bool:rebuy = false)
 	// If weapon index is -1, then something went very wrong.
 	if (weaponindex == -1)
 	{
-		LogEvent(false, LogType_Error, LOG_CORE_EVENTS, LogModule_Weapons, "ZMarket Equip", "Invalid weapon (%s) selected from the ZMarket menu.", weapon);
+		//LogEvent(false, LogType_Error, LOG_CORE_EVENTS, LogModule_Weapons, "ZMarket Equip", "Invalid weapon (%s) selected from the ZMarket menu.", weapon);
 		return false;
 	}
 	
@@ -945,6 +945,9 @@ stock bool:ZMarketEquip(client, const String:weapon[], bool:rebuy = false)
 	// If client is dead or a zombie, update weapon loadout instead.
 	if (!IsPlayerAlive(client) || InfectIsClientInfected(client))
 	{
+		// Update cookie with new weapon.
+		//ZMarketSetRebuyCookie(client, slot, weapon);
+		
 		TranslationPrintToChat(client, "Weapons zmarket updated loadout");
 		return false;
 	}
@@ -952,6 +955,9 @@ stock bool:ZMarketEquip(client, const String:weapon[], bool:rebuy = false)
 	new bool:zmarketbuyzone = GetConVarBool(g_hCvarsList[CVAR_WEAPONS_ZMARKET_BUYZONE]);
 	if (!rebuy && zmarketbuyzone && !WeaponsIsClientInBuyZone(client))
 	{
+		// Update cookie with new weapon.
+		//ZMarketSetRebuyCookie(client, slot, weapon);
+		
 		TranslationPrintToChat(client, "Weapons zmarket updated loadout");
 		return false;
 	}
@@ -1025,6 +1031,9 @@ stock bool:ZMarketEquip(client, const String:weapon[], bool:rebuy = false)
 	// If client doesn't have enough money, tell them, resend menu, and then stop.
 	if (cash < itemprice)
 	{
+		// Update cookie with new weapon.
+		//ZMarketSetRebuyCookie(client, slot, weapon);
+		
 		TranslationPrintToChat(client, "Weapons zmarket updated loadout");
 		return false;
 	}
@@ -1059,6 +1068,9 @@ stock bool:ZMarketEquip(client, const String:weapon[], bool:rebuy = false)
 			// Give client the weapon.
 			GivePlayerItem(client, weaponentity);
 		}
+		
+		// Update cookie with new weapon.
+		//ZMarketSetRebuyCookie(client, slot, weapon);
 		
 		// Add 1 to the client's purchase count.
 		ZMarketSetPurchaseCount(client, weapon, 1, true);
@@ -1269,7 +1281,7 @@ ZMarketRebuy(client, bool:autorebuy = false)
 	}
 	
 	// Transfer cookie values into an array.
-	new String:rebuyweapons[WeaponsSlot][WEAPONS_MAX_LENGTH];
+	new String:rebuyweapons[WEAPONS_SLOTS_MAX + 1][WEAPONS_MAX_LENGTH];
 	ZMarketCookiesToArray(client, rebuyweapons, WEAPONS_SLOTS_MAX + 1, sizeof(rebuyweapons[]));
 	
 	// x = Weapon slot.
@@ -1297,7 +1309,6 @@ ZMarketRebuy(client, bool:autorebuy = false)
 		
 		decl String:weaponentity[WEAPONS_MAX_LENGTH];
 		
-		// If can't find any weapon on client hand, just give it to them.
 		if(weaponindex == -1)
 			ZMarketEquip(client, rebuyweapons[x], true);
 			
