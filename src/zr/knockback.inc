@@ -31,6 +31,13 @@
 #define CSGO_KNOCKBACK_BOOST		251.0
 #define CSGO_KNOCKBACK_BOOST_MAX	350.0
 
+float g_fKnockbackScale[MAXPLAYERS+1];
+
+KnockbackClientInit(client)
+{
+	g_fKnockbackScale[client] = 1.0;
+}
+
 /** Client has been hurt.
  *
  * @param client		The client index. (zombie)
@@ -39,6 +46,12 @@
  * @param hitgroup	  Hitgroup attacker has damaged. 
  * @param dmg_health	Damage done.
  */
+
+KnockbackSetClientScale(client, Float:fScale)
+{
+	g_fKnockbackScale[client] = fScale;
+}
+
 KnockbackOnClientHurt(client, attacker, const String:weapon[], hitgroup, dmg_health)
 {
 	// If attacker is invalid, then stop.
@@ -121,6 +134,9 @@ KnockbackOnClientHurt(client, attacker, const String:weapon[], hitgroup, dmg_hea
 	
 	// Apply damage knockback multiplier.
 	knockback *= float(dmg_health);
+
+	if (g_fKnockbackScale[client] > 1.0)
+		knockback *= g_fKnockbackScale[client];
 	
 	if (g_Game == Game_CSGO)
 	{

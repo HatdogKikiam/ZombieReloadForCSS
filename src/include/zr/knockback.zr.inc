@@ -3,10 +3,9 @@
  *
  *  Zombie:Reloaded
  *
- *  File:		  zombiereloaded.inc
- *  Type:		  Include
- *  Description:   Main API include file.
- *  Notes:		 Include this file to include the whole ZR API. 
+ *  File:          knockback.zr.inc
+ *  Type:          Include
+ *  Description:   Knockback-related natives/forwards.
  *
  *  Copyright (C) 2009-2013  Greyscale, Richard Helgeby
  *
@@ -26,13 +25,15 @@
  * ============================================================================
  */
 
-#if defined _zr_included
- #endinput
-#endif
-#define _zr_included
+#define ZR_KNOCKBACK_CUSTOM (1<<31)
+#define ZR_KNOCKBACK_SCALE (1<<1)
+#define ZR_KNOCKBACK_LIMITFORCE (1<<2)
+#define ZR_KNOCKBACK_LIMITVEL (1<<3)
 
-#include <zr/infect.zr>
-#include <zr/respawn.zr>
-#include <zr/class.zr>
-#include <zr/weapons.zr>
-#include <zr/knockback.zr>
+/**
+ * Set a custom knockback scale.
+ *
+ * @param client            The client.
+ * @param fScale            Custom knockback scale.
+ */
+native ZR_SetClientKnockbackScale(client, Float:fScale);

@@ -3,10 +3,9 @@
  *
  *  Zombie:Reloaded
  *
- *  File:		  zombiereloaded.inc
- *  Type:		  Include
- *  Description:   Main API include file.
- *  Notes:		 Include this file to include the whole ZR API. 
+ *  File:          knockback.api.inc
+ *  Type:          Core
+ *  Description:   Native handlers for the ZR API. (Knockback module)
  *
  *  Copyright (C) 2009-2013  Greyscale, Richard Helgeby
  *
@@ -26,13 +25,28 @@
  * ============================================================================
  */
 
-#if defined _zr_included
- #endinput
-#endif
-#define _zr_included
+/**
+ * Initializes all natives and forwards related to infection.
+ */
+APIKnockbackInit()
+{
+	// Class module natives/forwards (knockback.zr.inc)
 
-#include <zr/infect.zr>
-#include <zr/respawn.zr>
-#include <zr/class.zr>
-#include <zr/weapons.zr>
-#include <zr/knockback.zr>
+	// Natives
+	CreateNative("ZR_SetClientKnockbackScale", APISetClientKnockbackScale);
+}
+
+/**
+ * Native call function (ZR_SetClientKnockbackScale)
+ *
+ * int ZR_SetClientKnockbackScale(int client, float fScale);
+ */
+public int APISetClientKnockbackScale(Handle plugin, int numParams)
+{
+	int client = GetNativeCell(1);
+	float fScale = view_as<float>(GetNativeCell(2));
+
+	APIValidateClientIndex(client);
+
+	KnockbackSetClientScale(client, fScale);
+}
